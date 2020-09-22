@@ -65,6 +65,12 @@ Open `http://localhost:3000/` in your browser.
 
 > Tests will be added by Microverse students. There are no tests for initial features in order to make sure that students write all tests from scratch.
 
+### Milestone 1
+
+ERD Diagram for the Social Media Scaffold
+
+![ERD Diagram](docs/erd_social_media.jpeg)
+
 ### Deployment
 
 TBA
