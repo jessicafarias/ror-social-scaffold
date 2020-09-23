@@ -1,12 +1,27 @@
-<section class="users-section">
+<h1> My confirmed friends</h1>
+  <section class="users-section">
   <ul class="users-list">
     <% @users.each do |user| %>
       <li>
         Name: <%= user.name %>
+        ID : <%= user.id %>
+        <br>
+        Amigo? : <%= user.friend?(current_user) %>
+        <br>
+        envitacion pendiente? : <%= current_user.requested_friend?(user) %>
+        <br>
+        Yo le envie la invitacion?
         <span class="profile-link">
           <%= link_to 'See Profile',  user_path(user), class: 'profile-link' %>
+          <%#= link_to 'Add friend',  friend, method: 'post', class: 'profile-link' %>
+          <%= link_to 'Sent invitation', "/adding/#{user.id}",class: 'fa fa-check purple event_title mr-2' %>
+          
         </span>
       </li>
     <% end %>
   </ul>
 </section>
+
+<h1> My pending friends</h1>
+
+<h1> Find a new friend</h1>

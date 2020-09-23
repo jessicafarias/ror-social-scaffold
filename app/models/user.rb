@@ -33,11 +33,19 @@ class User < ApplicationRecord
   def confirm_friend(user)
     confirmed_friend = inverse_friendships.find { |friendship| friendship.user == user }
     confirmed_friend.confirmed = true
-    confirmed_friend.save
+    #return false unless confirm_friend.user_id == user.id 
+    #Si eres el que envio la invitacion no puedes confirmarlo
+    confirmed_friend.save 
+    #true retorna verdadero si se sobreescribe
   end
 
   # To Confirm if it's an existing Friend
   def friend?(user)
     friends.include?(user)
   end
+
+  def requested_friend?(user)
+    pending_friends.include?(user)
+  end
+
 end
