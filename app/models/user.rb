@@ -19,24 +19,29 @@ class User < ApplicationRecord
     friends_array.compact
   end
 
-  # Users who have to confirm friend request
+  # Users who has SENT a friend request and is waiting for confirmation
   def pending_friends
     friendships.map { |friendship| friendship.friend unless friendship.confirmed }.compact
   end
 
-  # Users who have requested to be friends
+  # Users who RECEIVED a friend request and needs to confirm the request.
   def friend_requests
     inverse_friendships.map { |friendship| friendship.user unless friendship.confirmed }.compact
   end
 
-  # To Confirm a Friend (User)
+  # To Confirm a Friend (User) When I want to confirm someone's friendship
   def confirm_friend(user)
     confirmed_friend = inverse_friendships.find { |friendship| friendship.user == user }
     confirmed_friend.confirmed = true
-    #return false unless confirm_friend.user_id == user.id 
-    #Si eres el que envio la invitacion no puedes confirmarlo
-    confirmed_friend.save 
-    #true retorna verdadero si se sobreescribe
+    confirmed_friend.save
+  end
+
+  # Determines if The User if the Invitee or the Invited
+  def invitee?(user)
+    confirmed_friend = inverse_friendships.find { |friendship| friendship.user == user }
+    return false if confirmed_friend.nil?
+
+    true
   end
 
   # To Confirm if it's an existing Friend

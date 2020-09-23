@@ -5,16 +5,18 @@
       <li>
         Name: <%= user.name %>
         ID : <%= user.id %>
-        <br>
-        Amigo? : <%= user.friend?(current_user) %>
-        <br>
-        envitacion pendiente? : <%= current_user.requested_friend?(user) %>
-        <br>
-        Yo le envie la invitacion?
+        <br>        
+        <% if current_user.invitee?(user) %>
+          <p>Accept</p> <p>Decline</p>
+        <% elsif current_user.requested_friend?(user) %>
+          <p>Invite Pending</p>
+        <% elsif !user.friend?(current_user) %>
+          <%= link_to 'Add Friend', "/adding/#{user.id}",class: 'fa fa-check purple event_title mr-2' %>
+        <% end %>
         <span class="profile-link">
           <%= link_to 'See Profile',  user_path(user), class: 'profile-link' %>
           <%#= link_to 'Add friend',  friend, method: 'post', class: 'profile-link' %>
-          <%= link_to 'Sent invitation', "/adding/#{user.id}",class: 'fa fa-check purple event_title mr-2' %>
+          
           
         </span>
       </li>
