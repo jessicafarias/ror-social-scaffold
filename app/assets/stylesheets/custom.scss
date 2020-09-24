@@ -32,7 +32,7 @@ ul {
 
 a {
   text-decoration: none;
-  color: $primary-color-text;
+  color: $primary-color-light;
 }
 
 .nav {
@@ -53,7 +53,7 @@ a {
   }
 
   a:hover {
-    color: #fff;
+    color: rgb(241, 218, 141);
   }
 
   .menu {
@@ -288,7 +288,11 @@ form {
   .profile-link {
     font-size: 0.8em;
     margin: 0 0 8px 0;
-    color: $primary-color-dark;
+    color: $primary-color-light
+  }
+
+  .profile-link:hover {
+    color: rgb(241, 218, 141);
   }
 }
 

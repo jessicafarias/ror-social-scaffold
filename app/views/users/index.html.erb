@@ -5,30 +5,31 @@
       <li>
         Name: <%= user.name %>
         ID : <%= user.id %>
-        <br>        
+        <br>
+        <span class="profile-link">       
+          <%= button_to 'See Profile', user_path(user), method: 'get', class: 'profile-link' %>
+        </span>
+        <p>Friendship Status: </p>
         <% if current_user.invitee?(user) && !user.friend?(current_user) %>
-          <%= link_to 'Accept', "/friendships/#{user.id}", method: 'put', class: 'profile-link' %>
-          
-          <p>Decline</p>
+          <span class="profile-link">
+            <%= button_to 'Accept', "/friendships/#{user.id}", method: 'put', class: 'profile-link' %>
+          </span>
+          <span class="profile-link">
+            <%= button_to 'Decline', "/friendships/#{user.id}", method: 'delete', class: 'profile-link' %>
+          </span>        
         <% elsif current_user.requested_friend?(user) && !user.friend?(current_user) %>
           <p>Invite Pending</p>
         <% elsif !user.friend?(current_user) %>
-          <%= link_to 'Add Friend', "/adding/#{user.id}",class: 'fa fa-check purple event_title mr-2' %>
-        
+          <span class="profile-link">
+            <%= button_to 'Add Friend', "/adding/#{user.id}", method: 'get', class: 'fa fa-check purple event_title mr-2 profile-link' %>
+          </span>
         <% else %>
-         <p> FRIEND!!! </p>
-        <% end %>
+        <!-- When Friendship Confirmed -->
         <span class="profile-link">
-          <%= button_to 'See Profile',  user_path(user), method: 'get', class: 'profile-link' %>
-          <%#= link_to 'Add friend',  friend, method: 'post', class: 'profile-link' %>
-          
-          
+          <%= button_to 'Delete', "/friendships/#{user.id}", method: 'delete', class: 'profile-link' %>
         </span>
+        <% end %>
       </li>
     <% end %>
   </ul>
 </section>
-
-<h1> My pending friends</h1>
-
-<h1> Find a new friend</h1>

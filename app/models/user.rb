@@ -38,6 +38,12 @@ class User < ApplicationRecord
     #confirmed_friend.save
   end
 
+  def delete_friend(user)
+    delete_friend = inverse_friendships.find { |friendship| friendship.user == user }
+    delete_friend
+    #delete_friend.destroy
+  end
+
   # Determines if The User if the Invitee or the Invited
   def invitee?(user)
     confirmed_friend = inverse_friendships.find { |friendship| friendship.user == user }
