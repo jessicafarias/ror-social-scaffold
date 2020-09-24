@@ -30,10 +30,12 @@ class User < ApplicationRecord
   end
 
   # To Confirm a Friend (User) When I want to confirm someone's friendship
+  # current_user.confirm_friend(user)
   def confirm_friend(user)
     confirmed_friend = inverse_friendships.find { |friendship| friendship.user == user }
-    confirmed_friend.confirmed = true
-    confirmed_friend.save
+    confirmed_friend
+    #confirmed_friend.confirmed = true
+    #confirmed_friend.save
   end
 
   # Determines if The User if the Invitee or the Invited

@@ -6,15 +6,20 @@
         Name: <%= user.name %>
         ID : <%= user.id %>
         <br>        
-        <% if current_user.invitee?(user) %>
-          <p>Accept</p> <p>Decline</p>
-        <% elsif current_user.requested_friend?(user) %>
+        <% if current_user.invitee?(user) && !user.friend?(current_user) %>
+          <%= link_to 'Accept', "/friendships/#{user.id}", method: 'put', class: 'profile-link' %>
+          
+          <p>Decline</p>
+        <% elsif current_user.requested_friend?(user) && !user.friend?(current_user) %>
           <p>Invite Pending</p>
         <% elsif !user.friend?(current_user) %>
           <%= link_to 'Add Friend', "/adding/#{user.id}",class: 'fa fa-check purple event_title mr-2' %>
+        
+        <% else %>
+         <p> FRIEND!!! </p>
         <% end %>
         <span class="profile-link">
-          <%= link_to 'See Profile',  user_path(user), class: 'profile-link' %>
+          <%= button_to 'See Profile',  user_path(user), method: 'get', class: 'profile-link' %>
           <%#= link_to 'Add friend',  friend, method: 'post', class: 'profile-link' %>
           
           
