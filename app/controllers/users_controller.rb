@@ -3,6 +3,7 @@ class UsersController < ApplicationController
 
   def index
     return @users = User.where.not(id: current_user.id) unless current_user.nil?
+
     @users = User.all
   end
 

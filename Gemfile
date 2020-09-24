@@ -36,6 +36,9 @@ gem 'jbuilder', '~> 2.5'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
+# The most popular HTML, CSS, and JavaScript framework for developing responsive, mobile first projects on the web. http://getbootstrap.com
+gem 'bootstrap', '~> 4.5', '>= 4.5.2'
+
 gem 'devise'
 
 group :development, :test do

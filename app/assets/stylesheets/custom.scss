@@ -1,9 +1,11 @@
+@import "bootstrap";
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,700,900&display=swap");
 
 $primary-color-dark: #212121;
 $primary-color: #212121;
 $primary-color-light: #f7f7f7;
 $primary-color-text: #212121;
+$primary-color-blue: #1877f2;
 $divider-color: #bdbdbd;
 
 * {
@@ -32,7 +34,11 @@ ul {
 
 a {
   text-decoration: none;
-  color: $primary-color-light;
+  color: $primary-color-dark;
+}
+
+.grey {
+  background-color: $divider-color;
 }
 
 .nav {
@@ -166,13 +172,13 @@ form {
     justify-content: center;
     margin: 8px 0;
   }
-
+  
   input[type="submit"] {
     padding: 8px;
-    width: 50%;
+    width: 80px;
     border: none;
     border-radius: 4px;
-    background-color: $primary-color-dark;
+    background-color: $primary-color-blue;
     color: $primary-color-light;
     text-transform: uppercase;
     font-weight: 900;
@@ -288,7 +294,7 @@ form {
   .profile-link {
     font-size: 0.8em;
     margin: 0 0 8px 0;
-    color: $primary-color-light
+    color: $primary-color-light;
   }
 
   .profile-link:hover {
