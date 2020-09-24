@@ -15,25 +15,25 @@ RSpec.describe User, type: :model do
 
   context '#Validation' do
     it 'Valid User with all atributes' do
-      expect(User.new(name: 'name', email: 'email@email.com', password:'123456' )).to be_valid
+      expect(User.new(name: 'name', email: 'email@email.com', password: '123456')).to be_valid
     end
 
-    it 'Invalid User due empty name' do
-      expect(User.new(name: nil, email: 'email@email.com', password:'123456' )).to_not be_valid
+    it 'Invalid User due to empty name' do
+      expect(User.new(name: nil, email: 'email@email.com', password: '123456')).to_not be_valid
     end
 
-    it 'Invalid User due empty email' do
-      expect(User.new(name: 'name', email: nil, password:'123' )).to_not be_valid
+    it 'Invalid User due to empty email' do
+      expect(User.new(name: 'name', email: nil, password: '123')).to_not be_valid
     end
 
-    it 'Invalid User due password too short' do
-      expect(User.new(name: 'name', email: 'email@email.com', password:'123' )).to_not be_valid
+    it 'Invalid User due to password too short' do
+      expect(User.new(name: 'name', email: 'email@email.com', password: '123')).to_not be_valid
     end
   end
 
   context 'Model methods' do
-    user = User.new(name: 'name', email: 'email@email.com', password:'123' )
-    user2 = User.new(name: 'name', email: 'email@email.com', password:'123' )
+    user = User.new(name: 'name', email: 'email@email.com', password: '123')
+    user2 = User.new(name: 'name', email: 'email@email.com', password: '123')
     it 'User model can get the list of friendships' do
       expect(user.friendships.class.to_s).to eql('Friendship::ActiveRecord_Associations_CollectionProxy')
     end
@@ -46,7 +46,7 @@ RSpec.describe User, type: :model do
       expect(user.pending_friends.class).to eql(Array)
     end
 
-    it 'User return booelan wheter if hi/she is an invitee or not' do
+    it 'User returns a booelan if user is an invitee or not' do
       expect(user.invitee?(user2)).to eql(false)
     end
   end
