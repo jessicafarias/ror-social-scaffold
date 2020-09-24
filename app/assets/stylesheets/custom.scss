@@ -172,14 +172,12 @@ form {
     justify-content: center;
     margin: 8px 0;
   }
-  
+
   input[type="submit"] {
     padding: 8px;
     width: 80px;
     border: none;
     border-radius: 4px;
-    background-color: $primary-color-blue;
-    color: $primary-color-light;
     text-transform: uppercase;
     font-weight: 900;
   }
@@ -194,6 +192,29 @@ form {
       width: 100%;
     }
   }
+}
+
+.disable {
+  cursor: not-allowed;
+  font-size: 0.7em !important;
+  margin: 0 8px 8px 0;
+  color: rgb(32, 30, 30);
+  pointer-events: none;
+}
+
+.gbc-blue {
+  background-color: $primary-color-blue;
+  color: $primary-color-light;
+}
+
+.bgc-red {
+  background-color: rgb(156, 3, 3);
+  color: $primary-color-light;
+}
+
+.bgc-green {
+  background-color: rgb(91, 167, 4);
+  color: $primary-color-light;
 }
 
 .title {
@@ -271,12 +292,6 @@ form {
         font-size: 0.8em;
         width: 90%;
       }
-
-      span {
-        position: absolute;
-        right: 3px;
-        font-size: 0.6em;
-      }
     }
   }
 }
@@ -298,7 +313,7 @@ form {
   }
 
   .profile-link:hover {
-    color: rgb(241, 218, 141);
+    color: rgb(255, 255, 255);
   }
 }
 
