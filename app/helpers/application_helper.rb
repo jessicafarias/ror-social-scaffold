@@ -37,7 +37,7 @@ module ApplicationHelper
   def friendship_buttons(user)
     if current_user.invitee?(user) && !user.friend?(current_user)
       content_tag(:div, class: 'd-flex') do
-        content_tag(:span, class: 'profile-link gbc-blue') do
+        content_tag(:span, class: 'profile-link mr-2') do
           button_to 'Accept', "/friendships/#{user.id}", method: 'put', class: 'profile-link gbc-blue'
         end +
           content_tag(:span, class: 'profile-link') do
