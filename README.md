@@ -18,8 +18,8 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-Ruby: 2.6.3
-Rails: 5.2.3
+Ruby: 2.7.1
+Rails: 6.0.0
 Postgres: >=9.5
 
 ### Setup
