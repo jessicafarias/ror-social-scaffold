@@ -30,18 +30,14 @@ class User < ApplicationRecord
   end
 
   # To Confirm a Friend (User) When I want to confirm someone's friendship
-  # current_user.confirm_friend(user)
   def confirm_friend(user)
     confirmed_friend = inverse_friendships.find { |friendship| friendship.user == user }
     confirmed_friend
-    #confirmed_friend.confirmed = true
-    #confirmed_friend.save
   end
 
   def delete_friend(user)
     delete_friend = inverse_friendships.find { |friendship| friendship.user == user }
     delete_friend
-    #delete_friend.destroy
   end
 
   # Determines if The User if the Invitee or the Invited
@@ -60,5 +56,4 @@ class User < ApplicationRecord
   def requested_friend?(user)
     pending_friends.include?(user)
   end
-
 end

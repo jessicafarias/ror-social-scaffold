@@ -1,5 +1,5 @@
-class FriendshipsController < ApplicationController 
-  before_action :find_user, only: [:update, :destroy]
+class FriendshipsController < ApplicationController
+  before_action :find_user, only: %i[update destroy]
 
   def create
     # Creates Friendship Row
@@ -10,7 +10,7 @@ class FriendshipsController < ApplicationController
         format.html { redirect_to users_path, notice: 'Friendship request sent!' }
         format.json { render :show, status: :created, location: @friendship }
       else
-        format.html { redirect_to users_path, alert: "Error" }
+        format.html { redirect_to users_path, alert: 'Error' }
         format.json { render json: @friendship.errors, status: :unprocessable_entity }
       end
     end
