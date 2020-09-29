@@ -10,14 +10,16 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :friendships
+  has_many :friends, through: :friendships
   has_many :inverse_friendships, class_name: 'Friendship', foreign_key: 'friend_id'
+  has_many :inverse_friends, through: :friendships, source: :user
 
   # Confirmed Friendships
-  def friends
-    friends_array = friendships.map { |friendship| friendship.friend if friendship.confirmed }
-    friends_array.concat(inverse_friendships.map { |friendship| friendship.user if friendship.confirmed })
-    friends_array.compact
-  end
+  # def friends
+  #   friends_array = friendships.map { |friendship| friendship.friend if friendship.confirmed }
+  #   friends_array.concat(inverse_friendships.map { |friendship| friendship.user if friendship.confirmed })
+  #   friends_array.compact
+  # end
 
   # Users who has SENT a friend request and is waiting for confirmation
   def pending_friends
