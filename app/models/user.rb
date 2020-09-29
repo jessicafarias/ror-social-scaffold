@@ -2,7 +2,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+        :recoverable, :rememberable, :validatable
 
   validates :name, presence: true, length: { maximum: 20 }
 
@@ -10,16 +10,19 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :friendships
+  #busca amigo usando FK id_user RESULTADO= user.find(id_friend)
   has_many :friends, through: :friendships
-  has_many :inverse_friendships, class_name: 'Friendship', foreign_key: 'friend_id'
+
+  #busca amigo usando FK id_friend
+  has_many :inverse_friendships, class_name: 'Friendship', foreign_key: 'friend_id' 
   has_many :inverse_friends, through: :friendships, source: :user
 
-  # Confirmed Friendships
-  # def friends
-  #   friends_array = friendships.map { |friendship| friendship.friend if friendship.confirmed }
-  #   friends_array.concat(inverse_friendships.map { |friendship| friendship.user if friendship.confirmed })
-  #   friends_array.compact
-  # end
+  #Confirmed Friendships
+  def friends
+    friends_array = friendships.map { |friendship| friendship.friend if friendship.confirmed }
+    friends_array.concat(inverse_friendships.map { |friendship| friendship.user if friendship.confirmed })
+    friends_array.compact
+  end
 
   # Users who has SENT a friend request and is waiting for confirmation
   def pending_friends

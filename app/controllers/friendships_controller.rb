@@ -17,10 +17,20 @@ class FriendshipsController < ApplicationController
   end
 
   def update
+    #id_user     id_friend    confirmed
+    #3              2         nil
     @friendship = current_user.confirm_friend(@user)
     @friendship.confirmed = true
+    #id_user     id_friend   confirmed
+    #3              2          true
+
     respond_to do |format|
       if @friendship.save
+        @row = Friendship.new(user_id: @friendship.friend_id, friend_id: @friendship.user_id, confirmed: true)
+        @row.save
+        # id_user       id_friend     confirmed
+        #  3               2           true
+        #  2               3           true
         format.html { redirect_to users_path, notice: 'Friendship Confirmed.' }
         format.json { render :show, status: :created, location: @friendship }
       else
