@@ -42,17 +42,14 @@ class User < ApplicationRecord
     friend.destroy
   end
 
-  # is Barry.invitee?(Lola)
   def invitee?(user)
     received_requests.where(user_id: user, confirmed: nil).any?
   end
 
-  # did Lola.requested_friend?(barry)
   def requested_friend?(user)
     sent_requests.where(friend_id: user, confirmed: nil).any?
   end
 
-  # Barry.friend?(Lola)
   def friend?(params_user)
     received_requests.where(user_id: params_user, confirmed: true).any?
   end
