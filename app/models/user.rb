@@ -30,27 +30,30 @@ class User < ApplicationRecord
   def confirm_friend(user)
     friendships_unique = pending_accept.where(user_id: user.id).first
     friendships_unique.confirmed = true
-    @row = Friendship.new(user_id: friendships_unique.friend_id, friend_id: friendships_unique.user_id, confirmed: true)
-    @row.save
+    row = Friendship.new(user_id: friendships_unique.friend_id, friend_id: friendships_unique.user_id, confirmed: true)
+    row.save
     friendships_unique.save
   end
 
   def delete_friend(user)
-    delete_friend = received_requests.find { |friendship| friendship.user == user }
-    delete_friend.destroy
-    delete_friend = sent_requests.find { |friendship| friendship.friend == user }
-    delete_friend.destroy
+    friend = sent_requests.find { |friendship| friendship.friend == user }
+    friend&.destroy
+    friend = received_requests.find { |friendship| friendship.user == user }
+    friend.destroy
   end
 
+  # is Barry.invitee?(Lola)
   def invitee?(user)
-    !received_requests.where(user_id: user, confirmed: nil).empty?
+    received_requests.where(user_id: user, confirmed: nil).any?
   end
 
+  # did Lola.requested_friend?(barry)
   def requested_friend?(user)
-    !sent_requests.where(friend_id: user, confirmed: nil).empty?
+    sent_requests.where(friend_id: user, confirmed: nil).any?
   end
 
-  def friend?(user)
-    !received_requests.where(user_id: user, confirmed: true).empty?
+  # Barry.friend?(Lola)
+  def friend?(params_user)
+    received_requests.where(user_id: params_user, confirmed: true).any?
   end
 end

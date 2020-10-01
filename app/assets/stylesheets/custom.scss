@@ -175,11 +175,12 @@ form {
 
   input[type="submit"] {
     padding: 8px;
-    width: 80px;
+    width: 100px;
     border: none;
     border-radius: 4px;
     text-transform: uppercase;
-    font-weight: 900;
+    font-weight: 800;
+    font-size: 0.8rem;
   }
 
   input[type="submit"]:hover {
