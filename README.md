@@ -8,9 +8,9 @@
 - Ruby v2.7.0
 - Ruby on Rails v5.2.4
 
-## Live Demo
+## Live Demo on Heroku
 
-TBA
+[Social-Media-App-Jess-Ara](https://social-media-jess-ara.herokuapp.com/users/sign_in)
 
 
 ## Getting Started
