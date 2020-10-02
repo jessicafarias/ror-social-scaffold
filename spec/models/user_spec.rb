@@ -2,8 +2,13 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   context '#Associations' do
-    it 'User has many friendships' do
-      association = User.reflect_on_association(:friendships)
+    it 'User has many sent_requests for friendships' do
+      association = User.reflect_on_association(:sent_requests)
+      expect(association.macro).to eq(:has_many)
+    end
+
+    it 'User has many received_requests for friendships' do
+      association = User.reflect_on_association(:received_requests)
       expect(association.macro).to eq(:has_many)
     end
 
@@ -35,15 +40,15 @@ RSpec.describe User, type: :model do
     user = User.new(name: 'name', email: 'email@email.com', password: '123')
     user2 = User.new(name: 'name', email: 'email@email.com', password: '123')
     it 'User model can get the list of friendships' do
-      expect(user.friendships.class.to_s).to eql('Friendship::ActiveRecord_Associations_CollectionProxy')
+      expect(user.accepted_friendships.class.to_s).to eql('Friendship::ActiveRecord_AssociationRelation')
     end
 
-    it 'User model can get an array of his confirmed friends' do
-      expect(user.friends.class).to eql(Array)
+    it 'User model can get an array of his accepted friendships' do
+      expect(user.accepted_friendships.class.to_s).to eql('Friendship::ActiveRecord_AssociationRelation')
     end
 
     it 'User model can get an array of his pending_friends' do
-      expect(user.pending_friends.class).to eql(Array)
+      expect(user.pending_request.class.to_s).to eql('Friendship::ActiveRecord_AssociationRelation')
     end
 
     it 'User returns a booelan if user is an invitee or not' do

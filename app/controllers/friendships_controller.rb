@@ -2,11 +2,10 @@ class FriendshipsController < ApplicationController
   before_action :find_user, only: %i[update destroy]
 
   def create
-    # Creates Friendship Row
-    # User sends Friend Request
-    @friendship = current_user.friendships.build(friend_id: params[:friend_id])
+    @friendship = current_user.sent_requests.build(friend_id: params[:friend_id])
     respond_to do |format|
       if @friendship.save
+
         format.html { redirect_to users_path, notice: 'Friendship request sent!' }
         format.json { render :show, status: :created, location: @friendship }
       else
@@ -17,10 +16,8 @@ class FriendshipsController < ApplicationController
   end
 
   def update
-    @friendship = current_user.confirm_friend(@user)
-    @friendship.confirmed = true
     respond_to do |format|
-      if @friendship.save
+      if current_user.confirm_friend(@user)
         format.html { redirect_to users_path, notice: 'Friendship Confirmed.' }
         format.json { render :show, status: :created, location: @friendship }
       else
@@ -31,9 +28,8 @@ class FriendshipsController < ApplicationController
   end
 
   def destroy
-    @friendship = current_user.delete_friend(@user)
     respond_to do |format|
-      if @friendship.destroy
+      if current_user.delete_friend(@user)
         format.html { redirect_to users_path, notice: 'Friendship Successfully Deleted.' }
         format.json { render :show, status: :created, location: @friendship }
       else

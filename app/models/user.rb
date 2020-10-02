@@ -9,51 +9,48 @@ class User < ApplicationRecord
   has_many :posts
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
-  has_many :friendships
-  has_many :inverse_friendships, class_name: 'Friendship', foreign_key: 'friend_id'
+  has_many :sent_requests, class_name: 'Friendship', foreign_key: 'user_id', dependent: :destroy
+  has_many :received_requests, class_name: 'Friendship', foreign_key: 'friend_id', dependent: :destroy
 
-  # Confirmed Friendships
-  def friends
-    friends_array = friendships.map { |friendship| friendship.friend if friendship.confirmed }
-    friends_array.concat(inverse_friendships.map { |friendship| friendship.user if friendship.confirmed })
-    friends_array.compact
+  def accepted_friendships
+    sent_requests.where(confirmed: true)
   end
 
   # Users who has SENT a friend request and is waiting for confirmation
-  def pending_friends
-    friendships.map { |friendship| friendship.friend unless friendship.confirmed }.compact
+  def pending_request
+    sent_requests.where(confirmed: nil)
   end
 
   # Users who RECEIVED a friend request and needs to confirm the request.
-  def friend_requests
-    inverse_friendships.map { |friendship| friendship.user unless friendship.confirmed }.compact
+  def pending_accept
+    received_requests.where(confirmed: nil)
   end
 
-  # To Confirm a Friend (User) When I want to confirm someone's friendship
+  # To Confirm a Friend from (User) When I want to confirm someone's friendship
   def confirm_friend(user)
-    confirmed_friend = inverse_friendships.find { |friendship| friendship.user == user }
-    confirmed_friend
+    friendships_unique = pending_accept.where(user_id: user.id).first
+    friendships_unique.confirmed = true
+    row = Friendship.new(user_id: friendships_unique.friend_id, friend_id: friendships_unique.user_id, confirmed: true)
+    row.save
+    friendships_unique.save
   end
 
   def delete_friend(user)
-    delete_friend = inverse_friendships.find { |friendship| friendship.user == user }
-    delete_friend
+    friend = sent_requests.find { |friendship| friendship.friend == user }
+    friend&.destroy
+    friend = received_requests.find { |friendship| friendship.user == user }
+    friend.destroy
   end
 
-  # Determines if The User if the Invitee or the Invited
   def invitee?(user)
-    confirmed_friend = inverse_friendships.find { |friendship| friendship.user == user }
-    return false if confirmed_friend.nil?
-
-    true
-  end
-
-  # To Confirm if it's an existing Friend
-  def friend?(user)
-    friends.include?(user)
+    received_requests.where(user_id: user, confirmed: nil).any?
   end
 
   def requested_friend?(user)
-    pending_friends.include?(user)
+    sent_requests.where(friend_id: user, confirmed: nil).any?
+  end
+
+  def friend?(params_user)
+    received_requests.where(user_id: params_user, confirmed: true).any?
   end
 end
