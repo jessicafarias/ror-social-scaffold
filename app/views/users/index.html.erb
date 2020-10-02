@@ -1,12 +1,6 @@
-<section class="users-section">
+<h1> My confirmed friends</h1>
+  <section class="users-section">
   <ul class="users-list">
-    <% @users.each do |user| %>
-      <li>
-        Name: <%= user.name %>
-        <span class="profile-link">
-          <%= link_to 'See Profile',  user_path(user), class: 'profile-link' %>
-        </span>
-      </li>
-    <% end %>
+    <%= display_users(@users) %>
   </ul>
 </section>
